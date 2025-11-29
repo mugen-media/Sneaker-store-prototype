@@ -1,14 +1,28 @@
 import { Instagram, MessageCircle, Twitter } from "lucide-react";
+import { useEffect, useState } from "react";
+
 export default function Footer() {
+    const [highlight, setHighlight] = useState(false);
+
+    useEffect(() => {
+        const handleHighlight = () => {
+            setHighlight(true);
+            setTimeout(() => setHighlight(false), 2000);
+        };
+
+        window.addEventListener('highlightSupport', handleHighlight);
+        return () => window.removeEventListener('highlightSupport', handleHighlight);
+    }, []);
+
     return (
-        <footer className="flex justify-around text-black p-5 pl-40 pr-40">
+        <footer id="footer" className="flex justify-around text-black p-5 pl-40 pr-40">
             <div>
                 <p className="mb-1 font-medium">Useful Links -</p>
                 <ul className="text-xs text-gray-400 ">
                     <li className="hover:text-gray-950 transform duration-500"><a href="#">About</a></li>
                     <li className="hover:text-gray-950 transform duration-500"><a href="#">Shop</a></li>
                     <li className="hover:text-gray-950 transform duration-500"><a href="#">Terms and Conditions!</a></li>
-                    <li className="hover:text-gray-950 transform duration-500"><a href="#">Privacy Policy!</a></li>
+                    <li className="hover:text-gray-950 transform duration-500"><a href="#">Privacy Policy</a></li>
                     <li className="hover:text-gray-950 transform duration-500"><a href="#">Returns and Refunds</a></li>
                 </ul>
             </div>
@@ -18,10 +32,14 @@ export default function Footer() {
                     <a href="#"><Instagram className="hover:text-gray-950 transform duration-500"/></a>
                     <a href="#"><MessageCircle className="hover:text-gray-950 transform duration-500"/></a>
                     <a href="#"><Twitter className="hover:text-gray-950 transform duration-500"/></a>
-                    
                 </div>
             </div>
-            <div>
+            <div 
+                id="support-section"
+                className={`transition-all duration-500 ${
+                    highlight ? 'bg-gray-100 p-4 -m-4' : ''
+                }`}
+            >
                 <p className="mb-1 font-medium">Contact Us / Support</p>
                 <ul className="text-xs text-gray-400">
                     <li className="hover:text-gray-950 transform duration-500"><a href="#">Email : adityapatilap0724@gmail.com</a></li>
@@ -30,6 +48,5 @@ export default function Footer() {
                 </ul>
             </div>
         </footer>
-
     );
 }
